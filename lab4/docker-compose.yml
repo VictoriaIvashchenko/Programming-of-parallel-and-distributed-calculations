@@ -1,0 +1,33 @@
+version: "3"
+  
+services:
+      web-app:
+        container_name: app
+        build: 
+          context: .
+          dockerfile: Dockerfile
+        image: realworld
+        depends_on:
+          - db
+        environment:
+          PORT: '8888'
+        ports:
+          - 8888:8888
+        networks:
+          - app
+      db:
+        container_name: database
+        image: nouchka/sqlite3:latest
+        ports:
+          - 8889:8889
+        restart: always
+        volumes:
+          - data:/data
+        networks:
+          - app
+
+volumes:
+  data:
+    
+networks:
+  app:
